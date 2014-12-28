@@ -1,0 +1,8 @@
+.DS_Store
+envs.sh
+tmp/
+node_modules/
+bot/world/example-location.json
+npm-debug.log
+log.log
+interaction.log

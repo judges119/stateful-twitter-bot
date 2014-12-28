@@ -1,0 +1,518 @@
+[
+  {
+    "collection": "room",
+    "comment": "An initial starting room for the game, all credit to @MisterNistal. You have to wake up and explore the room to open the door and get to the next area (which is just a dummy room for the time being).",
+    "document": {
+      "location": [0, 0, 0],
+      "realm": "start",
+      "initialise_flags": [
+        ["start_0_0_0_asleep", "first_visit"]
+      ],
+      "visited_flag": "start_0_0_0_visited",
+      "commands": {
+        "help": {
+          "response": "Consider leaving this room. It's empty now, but for how much longer?",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_door_open": {
+              "number": 1,
+              "response": "Try 'examine [x]' or 'use [x]' on objects, you need to open that door. Or check out the FAQ."
+            }
+          }
+        },
+        "look around": {
+          "response": "In the room are several magazines on a nearby table, and a computer on a desk beside the only door in the room.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        },
+        "wake": {
+          "response": "You wake to a spacious waiting room. Although you're not sure how you got there or what you were waiting for.",
+          "required_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "Alas, if only you could wake from this surreal place. But this is no dream!"
+            }
+          },
+          "result_flags" : [
+            ["start_0_0_0_asleep", 0]
+          ]
+        },
+        "arise": {
+          "alias": "wake"
+        },
+        "use door": {
+          "executable": {
+            "location": [0, 0, 1],
+            "realm": "start"
+          },
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_door_open": {
+              "number": 1,
+              "response": "You attempt to open the only door in the room, however the door is locked and you cannot proceed."
+            }
+          }
+        },
+        "hallway": {
+          "alias": "use door"
+        },
+        "look door": {
+          "response": "The only door in the room is now open just a crack. Peering through, you see a large hallway.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_door_open": {
+              "number": 1,
+              "response": "A sturdy-looking office door. The door is closed."
+            }
+          }
+        },
+        "look at door": {
+          "alias": "look door"
+        },
+        "examine door": {
+          "alias": "look door"
+        }
+      }
+    }
+  },
+  {
+    "collection": "object",
+    "document": {
+      "name": "magazine",
+      "location": [0, 0, 0],
+      "realm": "start",
+      "commands": {
+        "look magazine": {
+          "response": "From the headlines of some of these mags, you wouldn't be surprised if they were the cause of you dozing off earlier.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        },
+        "look at magazine": {
+          "alias": "look magazine"
+        },
+        "examine magazine": {
+          "alias": "look magazine"
+        },
+        "read magazine": {
+          "response": "You peruse a random magazine that takes your interest called 'Hacking!', noting some of the more interesting tips.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_hacking_skill": {
+              "number": 1,
+              "response": "Now is hardly the time for reading. None of the magazines seem of any interest or usefulness to you."
+            },
+            "start_0_0_0_door_open": {
+              "number": 1,
+              "response": "Now is hardly the time for reading. None of the magazines seem of any interest or usefulness to you."
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_hacking_skill", 1]
+          ]
+        },
+        "use magazine": {
+          "alias": "read magazine"
+        },
+        "eat magazine": {
+          "response": "This is not the time or the place to do that. Well, maybe the subscription card deserves a nibble.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "collection": "object",
+    "document": {
+      "name": "window",
+      "location": [0, 0, 0],
+      "realm": "start",
+      "commands": {
+        "look window": {
+          "response": "Realising there must be one, you look around for a window. Sure enough, one is seamlessly built into the wall.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_no_window": {
+              "number": 1,
+              "response": "There is no window and probably never will be."
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_known_window", 1]
+          ]
+        },
+        "look at window": {
+          "alias": "look window"
+        },
+        "examine window": {
+          "alias": "look window"
+        },
+        "use window": {
+          "response": "Claustrophobia overwhelms you like a mob snitch in a car-crusher, you reach out to open a window, but don't see one.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_known_window": {
+              "number": 1,
+              "response": "You open the window and are immediately met with the bleak reality as you stare out into the cream-coloured nothingness"
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_no_window", 1]
+          ]
+        }
+      }
+    }
+  },
+  {
+    "collection": "object",
+    "document": {
+      "name": "table",
+      "location": [0, 0, 0],
+      "realm": "start",
+      "commands": {
+        "look table": {
+          "response": "It's a plain coffee table, bolted to the floor and purposeless except as a resting place for the magazines.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        },
+        "look at table": {
+          "alias": "look table"
+        },
+        "examine table": {
+          "alias": "look table"
+        },
+        "use table": {
+          "response": "The table is bolted to the ground and quite boring, it's not up for doing anything.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "collection": "object",
+    "document": {
+      "name": "desk",
+      "location": [0, 0, 0],
+      "realm": "start",
+      "commands": {
+        "look desk": {
+          "response": "A typical secretary's desk; a drawer, footrest, drinking bird ornament and a computer.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        },
+        "look at desk": {
+          "alias": "look desk"
+        },
+        "examine desk": {
+          "alias": "look desk"
+        },
+        "use desk": {
+          "response": "You sit at the desk, immediately aware of the power a secretary feels by being 3 inches taller than anyone else seated.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        },
+        "look bird": {
+          "response": "One of those glass drinking birds wearing a red top-hat. Googly eyes appear to have been glued over the painted ones.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          }
+        },
+        "look at bird": {
+          "alias": "look bird"
+        },
+        "examine bird": {
+          "alias": "look bird"
+        },
+        "use bird": {
+          "response": "The bird swings without a glass to drink from, it looks unsettling, as if something was wrong. You cannot stop it now.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "result_flags" : [
+            ["start_0_0_0_bird_start", 1]
+          ]
+        },
+        "stop bird": {
+          "response": "It's no use, you cannot stop the bird. If it were alive, it would have now begun it's inevitable death from thirst.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_bird_start": {
+              "number": 1,
+              "response": " The bird is no threat to you, it is still, motionless."
+            }
+          }
+        },
+        "look drawer": {
+          "response": "You examine the desks drawers, completely generic and unremarkable in every way.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_drawer_open": {
+              "number": 1,
+              "response": "An open drawer containing papers, pistol ammunition and a small red button."
+            }
+          }
+        },
+        "look at drawer": {
+          "alias": "look drawer"
+        },
+        "examine drawer": {
+          "alias": "look drawer"
+        },
+        "open drawer": {
+          "response": "The draw slides open to reveal a flustercluck of papers, some loose ammunition and a small red button.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_drawer_open": {
+              "number": 1,
+              "response": "Despite all your efforts, the drawer only extends so far, maybe try to 'close' it?"
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_drawer_open", 1]
+          ]
+        },
+        "use drawer": {
+          "alias": "open drawer"
+        },
+        "close drawer": {
+          "response": "The drawer slides back into the shut position, the desk is once more at rest.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_drawer_open": {
+              "number": 1,
+              "response": "It's already shut, but I'm glad you're making sure of that."
+            }
+          }
+        },
+        "look button": {
+          "response": "A simple plastic red switch connected by wire leading into the desk. Currently set to 'OFF'.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_drawer_open": {
+              "number": 1,
+              "response": "Try examining or using objects to find a way to open that door."
+            }
+          }
+        },
+        "look at button": {
+          "alias": "look button"
+        },
+        "examine button": {
+          "alias": "look button"
+        },
+        "press button": {
+          "response": "You flick the switch to 'ON', immediately hearing the door beside the desk make a loud CLICK.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_door_open": {
+              "number": 1,
+              "response": "Flicking the switch makes no difference. You notice the wire to the switch has come loose, disabling it."
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_drawer_open": {
+              "number": 1,
+              "response": "Try examining or using objects to find a way to open that door."
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_door_open", 1]
+          ]
+        },
+        "use button": {
+          "alias": "press button"
+        },
+        "take ammo": {
+          "response": "Whoever owns the ammo would also own a gun loaded with even more bullets, you reconsider taking anything.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_drawer_open": {
+              "number": 1,
+              "response": "Try examining or using objects to find a way to open that door."
+            }
+          }
+        },
+        "use ammo": {
+          "alias": "take ammo"
+        }
+      }
+    }
+  },
+  {
+    "collection": "object",
+    "document": {
+      "name": "computer",
+      "location": [0, 0, 0],
+      "realm": "start",
+      "commands": {
+        "look computer": {
+          "response": "The computer appears to be in standby mode.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_door_open": {
+              "number": 1,
+              "response": "The computer is lifeless. It seems your previous actions were too much for it, must have been running Windows ME."
+            }
+          }
+        },
+        "look at computer": {
+          "alias": "look computer"
+        },
+        "examine computer": {
+          "alias": "look computer"
+        },
+        "use computer": {
+          "response": "Thanks to the magazine's tips, you manage to gain access to a root shell. You're ready to hack.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_door_open" : {
+              "number": 1,
+              "response": "You're unable to switch on the PC, you'd call the IT dept. for help, but you don't have a phone or know their extension."
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_hacking_skill": {
+              "number": 1,
+              "response": "Hitting a key, the computer monitor displays a login screen. After a few random login attempts, you're locked out."
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_ready_to_hack", 1]
+          ]
+        },
+        "hack computer": {
+          "response": "You successfully bypass 7 proxies, hack the gibson, unlock the door behind you with a *CLICK* and crash the PC.",
+          "precluding_flags": {
+            "start_0_0_0_asleep": {
+              "number": 1,
+              "response": "You are asleep, perhaps you should wake up?"
+            },
+            "start_0_0_0_door_open" : {
+              "number": 1,
+              "response": "You're unable to switch on the PC, you'd call the IT dept. for help, but you don't have a phone or know their extension."
+            }
+          },
+          "required_flags": {
+            "start_0_0_0_ready_to_hack": {
+              "number": 1,
+              "response": "Hitting a key, the computer monitor displays a login screen. After a few random login attempts, you're locked out."
+            }
+          },
+          "result_flags": [
+            ["start_0_0_0_door_open", 1]
+          ]
+        }
+      }
+    }
+  },
+  {
+    "collection": "room",
+    "comment": "A dummy second room to demonstrate the \"executable\" property a command can contain",
+    "document": {
+      "location": [0, 0, 1],
+      "realm": "start",
+      "commands": {
+        "help": {
+          "response": "Libera Te Tutemet Ex Inferis."
+        },
+        "look around": {
+          "response": "Libera Te Tutemet Ex Inferis."
+        }
+      }
+    }
+  }
+]

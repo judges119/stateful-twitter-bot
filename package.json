@@ -1,0 +1,38 @@
+{
+  "name": "stateful-twitter-bot",
+  "version": "0.1.0",
+  "description": "A twitter bot that forms responses to tweets directed at them based on the tweet content and previous interactions with the user.",
+  "author": "Adam O'Grady <adam.ogrady@gmail.com> (http://adamogrady.id.au/)",
+  "scripts": {
+    "postinstall": "node server.js load",
+    "start": "node server.js",
+    "test": "mocha",
+    "load": "node server.js load"
+  },
+  "main": "lib/bot.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judges119/stateful-twitter-bot"
+  },
+  "bugs": {
+    "url": "https://github.com/judges119/stateful-twitter-bot/issues"
+  },
+  "keywords": [
+    "stateful",
+    "bot",
+    "twitter",
+    "responder",
+    "interactive"
+  ],
+  "dependencies": {
+    "twit": "~1.1.18",
+    "mongodb": "~1.4.0",
+    "bunyan": "~1.2.3"
+  },
+  "devDependencies": {
+    "mocha": "~2.1.0",
+    "mockery": "~1.4.0"
+  },
+  "private": true,
+  "license": "MIT"
+}
